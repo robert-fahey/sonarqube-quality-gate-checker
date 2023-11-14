@@ -1,0 +1,20 @@
+name: SonarQube Quality Gate Check
+description: Check the SonarQube Quality Gate status for a specified branch
+author: https://github.com/robert-fahey/sonarqube-quality-gate-checker-buildkite-plugin
+version: v1.0
+requirements:
+  - curl
+  - jq
+
+configuration:
+  properties:
+    api_token:
+      type: string
+      description: "Your SonarQube API token to authenticate against the SonarQube Quality Gate endpoint."
+      required: true
+    project_key:
+      type: string
+      description: "The key that identifies your SonarQube project."
+      required: true
+
+  additionalProperties: false

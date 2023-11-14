@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  tests:
+    image: buildkite/plugin-tester:v4.0.0
+    volumes:
+      - ".:/plugin:ro"
+
+  lint:
+    image: buildkite/plugin-linter
+    command: ["--id", "robert-fahey/sonarqube-quality-gate-checker-buildkite-plugin"]
+    volumes:
+      - ".:/plugin:ro"
+
+  shellcheck:
+    image: koalaman/shellcheck-alpine:latest
+    command: ["shellcheck", "/plugin/hooks/environment"]
+    volumes:
+      - ".:/plugin:ro"

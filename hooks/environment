@@ -1,0 +1,46 @@
+#!/bin/bash
+set -euo pipefail
+
+function check_sonarqube_quality_gate() {
+  local api_token="$1"
+  local project="$2"
+  local branch="$3"
+  local response
+  local status
+
+  # URL encode the branch name
+  local encoded_branch
+  encoded_branch=$(printf '%s' "${branch}" | jq -sRr @uri)
+
+  # Get the response from SonarQube API
+  response=$(curl -g -s -u "${api_token}:" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=${project}&branch=${encoded_branch}")
+
+  echo "Response from SonarQube API = ${response}"
+
+  # Check if curl was successful
+  # shellcheck disable=SC2320
+  # shellcheck disable=SC2181
+  if [ $? -ne 0 ]; then
+    echo "Error querying SonarQube API."
+    exit 1
+  fi
+
+  # Extract the quality gate status
+  status=$(echo "${response}" | jq -r '.projectStatus.status')
+
+  # shellcheck disable=SC2320
+  # shellcheck disable=SC2181
+  if [ $? -ne 0 ]; then
+    echo "Error parsing response from SonarQube API."
+    exit 1
+  fi
+
+  if [[ "${status}" != "OK" ]]; then
+    echo "SonarQube Quality Gate status is NOT OK!"
+    exit 1
+  else
+    echo "SonarQube Quality Gate status is OK."
+  fi
+}
+
+check_sonarqube_quality_gate "${SONARQUBE_API_TOKEN}" "${PROJECT_KEY}" "${BUILDKITE_BRANCH}"
