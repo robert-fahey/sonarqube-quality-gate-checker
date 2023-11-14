@@ -17,7 +17,7 @@ Add the following to your `pipeline.yml`:
 steps:
   - command: "echo 'Running SonarQube Quality Gate Check''"
     plugins:
-      - robert-fahey/sonarqube-quality-gate-checker-buildkite-plugin#v1.0:
+      - robert-fahey/sonarqube-quality-gate-checker#v1.0:
           api_token: "your-sonarqube-api-token"
           project_key: "your-sonarqube-project-key"
 ```
