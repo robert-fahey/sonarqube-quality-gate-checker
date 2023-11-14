@@ -37,6 +37,7 @@ function check_sonarqube_quality_gate() {
 
   if [[ "${status}" != "OK" ]]; then
     echo "SonarQube Quality Gate status is NOT OK!"
+    echo "See - https://sonarcloud.io/summary/new_code?id=${project}&branch=${encoded_branch}
     exit 1
   else
     echo "SonarQube Quality Gate status is OK."
