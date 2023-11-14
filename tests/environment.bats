@@ -9,7 +9,7 @@ quality_gate_check_script="$PWD/hooks/environment"
 @test "SonarQube Quality Gate status is OK" {
   export PROJECT_KEY="RobertFahey_example-api" 
   export BUILDKITE_BRANCH="2.25.0"
-  export SONARQUBE_API_TOKEN="45963A6D4A4046A08D4DDEA07B15FBAB" # This is just for testing. Don't expose your real token!
+  export API_TOKEN="45963A6D4A4046A08D4DDEA07B15FBAB" # This is just for testing. Don't expose your real token!
 
   stub curl \
      "-g -s -u 45963A6D4A4046A08D4DDEA07B15FBAB: 'https://sonarcloud.io/api/qualitygates/project_status?projectKey=RobertFahey_example-api&branch=2.25.0' : echo '{\"projectStatus\":{\"status\":\"OK\"}}'"
@@ -23,13 +23,13 @@ quality_gate_check_script="$PWD/hooks/environment"
 
   unset PROJECT_KEY
   unset BUILDKITE_BRANCH
-  unset SONARQUBE_API_TOKEN
+  unset API_TOKEN
 }
 
 @test "SonarQube Quality Gate status is NOT OK" {
   export PROJECT_KEY="RobertFahey_example-api"    
   export BUILDKITE_BRANCH="2.25.0"
-  export SONARQUBE_API_TOKEN="45963A6D4A4046A08D4DDEA07B15FBAB" # This is just for testing. Don't expose your real token!
+  export API_TOKEN="45963A6D4A4046A08D4DDEA07B15FBAB" # This is just for testing. Don't expose your real token!
 
   stub curl \
       "-g -s -u 45963A6D4A4046A08D4DDEA07B15FBAB: 'https://sonarcloud.io/api/qualitygates/project_status?projectKey=RobertFahey_example-api&branch=2.25.0' : echo '{\"projectStatus\":{\"status\":\"ERROR\"}}'"
@@ -43,5 +43,5 @@ quality_gate_check_script="$PWD/hooks/environment"
 
   unset PROJECT_KEY
   unset BUILDKITE_BRANCH
-  unset SONARQUBE_API_TOKEN
+  unset API_TOKEN
 }
