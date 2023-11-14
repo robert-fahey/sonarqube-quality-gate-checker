@@ -43,4 +43,4 @@ function check_sonarqube_quality_gate() {
   fi
 }
 
-check_sonarqube_quality_gate "${SONARQUBE_API_TOKEN}" "${PROJECT_KEY}" "${BUILDKITE_BRANCH}"
+check_sonarqube_quality_gate "${API_TOKEN}" "${PROJECT_KEY}" "${BUILDKITE_BRANCH}"
