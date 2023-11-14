@@ -7,9 +7,9 @@ setup() {
 quality_gate_check_script="$PWD/hooks/environment"
 
 @test "SonarQube Quality Gate status is OK" {
-  export PROJECT_KEY="RobertFahey_example-api" 
+  export BUILDKITE_PLUGIN_SONARQUBE_QUALITY_GATE_CHECKER_PROJECT_KEY="RobertFahey_example-api" 
   export BUILDKITE_BRANCH="2.25.0"
-  export API_TOKEN="45963A6D4A4046A08D4DDEA07B15FBAB" # This is just for testing. Don't expose your real token!
+  export BUILDKITE_PLUGIN_SONARQUBE_QUALITY_GATE_CHECKER_API_TOKEN="45963A6D4A4046A08D4DDEA07B15FBAB" # This is just for testing. Don't expose your real token!
 
   stub curl \
      "-g -s -u 45963A6D4A4046A08D4DDEA07B15FBAB: 'https://sonarcloud.io/api/qualitygates/project_status?projectKey=RobertFahey_example-api&branch=2.25.0' : echo '{\"projectStatus\":{\"status\":\"OK\"}}'"
@@ -21,15 +21,15 @@ quality_gate_check_script="$PWD/hooks/environment"
 
   unstub curl
 
-  unset PROJECT_KEY
+  unset BUILDKITE_PLUGIN_SONARQUBE_QUALITY_GATE_CHECKER_PROJECT_KEY
   unset BUILDKITE_BRANCH
-  unset API_TOKEN
+  unset BUILDKITE_PLUGIN_SONARQUBE_QUALITY_GATE_CHECKER_API_TOKEN
 }
 
 @test "SonarQube Quality Gate status is NOT OK" {
-  export PROJECT_KEY="RobertFahey_example-api"    
+  export BUILDKITE_PLUGIN_SONARQUBE_QUALITY_GATE_CHECKER_PROJECT_KEY="RobertFahey_example-api"    
   export BUILDKITE_BRANCH="2.25.0"
-  export API_TOKEN="45963A6D4A4046A08D4DDEA07B15FBAB" # This is just for testing. Don't expose your real token!
+  export BUILDKITE_PLUGIN_SONARQUBE_QUALITY_GATE_CHECKER_API_TOKEN="45963A6D4A4046A08D4DDEA07B15FBAB" # This is just for testing. Don't expose your real token!
 
   stub curl \
       "-g -s -u 45963A6D4A4046A08D4DDEA07B15FBAB: 'https://sonarcloud.io/api/qualitygates/project_status?projectKey=RobertFahey_example-api&branch=2.25.0' : echo '{\"projectStatus\":{\"status\":\"ERROR\"}}'"
@@ -41,7 +41,7 @@ quality_gate_check_script="$PWD/hooks/environment"
 
   unstub curl
 
-  unset PROJECT_KEY
+  unset BUILDKITE_PLUGIN_SONARQUBE_QUALITY_GATE_CHECKER_PROJECT_KEY
   unset BUILDKITE_BRANCH
-  unset API_TOKEN
+  unset BUILDKITE_PLUGIN_SONARQUBE_QUALITY_GATE_CHECKER_API_TOKEN
 }
